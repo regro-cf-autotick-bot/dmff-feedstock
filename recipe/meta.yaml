@@ -25,7 +25,9 @@ requirements:
   run:
     - python >=3.8
     - numpy >=1.18
-    - jax
+    # https://github.com/google/jax/issues/17660
+    # latest jax2tf requires TF 2.15, but it's not ready on conda-forge
+    - jax >=0.4.1,<0.4.15
     - jax-md >=0.2.4
     - mdtraj
     - optax >=0.1.4
