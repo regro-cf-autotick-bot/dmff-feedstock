@@ -1,5 +1,5 @@
 {% set name = "dmff" %}
-{% set version = "0.2.0" %}
+{% set version = "1.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/deepmodeling/DMFF/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: d990516e2dc9ba45d87a8a93fc6fc12bc542adf555bba3e706a41e4db1655d71
+  sha256: b38847ec0be34360c885f4c98dea93df1dc9ccd0e48dca84af5bac23f105ff26
 
 build:
   number: 0
@@ -25,14 +25,23 @@ requirements:
   run:
     - python >=3.8
     - numpy >=1.18
-    - jax
+    # https://github.com/google/jax/issues/17660
+    # latest jax2tf requires TF 2.15, but it's not ready on conda-forge
+    # However, pin jax to <0.4.15 leads to the following error:
+    # chex 0.1.83 has requirement jax>=0.4.16, but you have jax 0.4.14.
+    # flax 0.7.5 has requirement jax>=0.4.19, but you have jax 0.4.14.
+    # The conda-forge packages are broken
+    - jax >=0.4.1
     - jax-md >=0.2.4
     - mdtraj
-    - optax
-    - pymbar
+    - optax >=0.1.4
+    - pymbar >=4.0.0
     - openmm >=7.6.0
     - rdkit
     - freud
+    - networkx >=3.0
+    - tqdm
+    - jaxopt >=0.8.0
 
 test:
   imports:
