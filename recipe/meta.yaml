@@ -10,7 +10,7 @@ source:
   sha256: b38847ec0be34360c885f4c98dea93df1dc9ccd0e48dca84af5bac23f105ff26
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script_env:
     - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}
@@ -18,12 +18,12 @@ build:
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - pip
     - setuptools
     - setuptools_scm
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - numpy >=1.18
     # https://github.com/google/jax/issues/17660
     # latest jax2tf requires TF 2.15, but it's not ready on conda-forge
@@ -50,6 +50,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/deepmodeling/DMFF
